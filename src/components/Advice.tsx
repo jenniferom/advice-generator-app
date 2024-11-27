@@ -1,29 +1,28 @@
 import React, { useEffect, useState } from 'react';
-import { fetchRandomAdvice } from '../services/api';
+import { fetchAdvice } from '../services/api';
 
 const Advice: React.FC = () => {
     const [advice, setAdvice] = useState<string>('');
-    const [slipId, setSlipId] = useState<number | null>(null);
+    const [id, setSlipId] = useState<number | null>(null);
 
     useEffect(() => {
         const loadAdvice = async () => {
             try {
-                const data = await fetchRandomAdvice();
+                const data = await fetchAdvice();
                 setAdvice(data.advice);
-                setSlipId(data.slip_id);
+                setSlipId(data.id);
             } catch (error) {
                 console.error("Error al cargar el consejo:", error);
             }
         };
-
         loadAdvice();
     }, []);
 
     return (
         <div>
-            <h1>Consejo Aleatorio</h1>
-            <p>{advice}</p>
-            {slipId && <p>ID del consejo: {slipId}</p>}
+            <h3>Advice #{id}</h3>
+            <p>"{advice}"</p>
+            
         </div>
     );
 };
